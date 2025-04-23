@@ -14,31 +14,31 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mock data - same as frontend for initial setup
+# Mock data - formatted according to README specification
 mock_data = [
     {
         "city": "بغداد / الكفاح",
-        "buy": "146,750",
-        "sell": "147,000",
-        "updated": "2025-04-24 10:30 AM"
+        "buy_price": 146750,  # Using integer/float is better for prices
+        "sell_price": 147000,
+        "last_updated": "2025-04-24T10:30:00" # ISO 8601 format
     },
     {
         "city": "أربيل",
-        "buy": "147,050",
-        "sell": "147,300", 
-        "updated": "2025-04-24 10:30 AM"
+        "buy_price": 147050,
+        "sell_price": 147300,
+        "last_updated": "2025-04-24T10:30:00"
     },
     {
         "city": "البصرة",
-        "buy": "146,800",
-        "sell": "147,100",
-        "updated": "2025-04-24 10:30 AM"
+        "buy_price": 146800,
+        "sell_price": 147100,
+        "last_updated": "2025-04-24T10:30:00"
     },
     {
         "city": "السعر الرسمي",
-        "buy": "1,310",
-        "sell": "1,310",
-        "updated": "البنك المركزي"
+        "buy_price": 1310,
+        "sell_price": 1310,
+        "last_updated": "2025-04-24T00:00:00" # Example timestamp for official rate
     }
 ]
 

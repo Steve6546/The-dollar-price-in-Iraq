@@ -11,19 +11,42 @@ function populateTable(data) {
     data.forEach(item => {
         const row = document.createElement('tr');
         
+        // Format prices with commas
+        const buyPriceFormatted = item.buy_price.toLocaleString('en-US');
+        const sellPriceFormatted = item.sell_price.toLocaleString('en-US');
+        // Format timestamp
+        const updatedTime = new Date(item.last_updated).toLocaleTimeString('ar-IQ', { hour: '2-digit', minute: '2-digit', hour12: true });
+        const updatedDate = new Date(item.last_updated).toLocaleDateString('ar-IQ', { year: 'numeric', month: '2-digit', day: '2-digit' });
+
         row.innerHTML = `
             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${item.city}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.buy}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.sell}</td>
-            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.updated}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${buyPriceFormatted}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${sellPriceFormatted}</td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${updatedDate} ${updatedTime}</td>
         `;
-        
+
         tableBody.appendChild(row);
     });
-    
-    // Update timestamp
-    const now = new Date();
-    lastUpdated.textContent = now.toLocaleString('ar-IQ');
+
+    // Find the most recent update time from the data
+    let mostRecentUpdate = null;
+    if (data.length > 0) {
+        // Filter out any invalid dates before finding the max
+        const validDates = data
+            .map(item => new Date(item.last_updated))
+            .filter(date => !isNaN(date.getTime()));
+
+        if (validDates.length > 0) {
+            mostRecentUpdate = new Date(Math.max.apply(null, validDates));
+        }
+    }
+
+    // Update the overall timestamp display
+    if (mostRecentUpdate) {
+        lastUpdated.textContent = mostRecentUpdate.toLocaleString('ar-IQ', { dateStyle: 'medium', timeStyle: 'short' });
+    } else {
+        lastUpdated.textContent = 'غير متوفر'; // Or keep 'جار التحميل...' if preferred
+    }
 }
 
 async function fetchRates() {
