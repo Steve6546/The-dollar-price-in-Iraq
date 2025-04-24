@@ -45,7 +45,10 @@ def create_table():
 # Scraping functions
 async def scrape_cbi():
     try:
-        async with httpx.AsyncClient(timeout=10) as client:
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+        }
+        async with httpx.AsyncClient(timeout=10, headers=headers) as client:
             response = await client.get("https://cbi.iq")
             response.raise_for_status()  # Raise HTTPError for bad responses (4xx or 5xx)
             soup = BeautifulSoup(response.content, "html.parser")
@@ -54,6 +57,7 @@ async def scrape_cbi():
             # buy_price = soup.find("span", {"class": "buy-price"}).text
             # sell_price = soup.find("span", {"class": "sell-price"}).text
             # For now, return dummy data
+            # Please replace the dummy data with the actual data extraction logic
             return {"buy_price": 1310, "sell_price": 1310, "source": "cbi.iq"}
     except httpx.HTTPError as e:
         print(f"HTTPError while scraping CBI: {e}")
