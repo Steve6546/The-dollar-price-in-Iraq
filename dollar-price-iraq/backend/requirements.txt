@@ -1,4 +1,6 @@
 fastapi
 uvicorn[standard]
-# Add scraping libraries later (e.g., beautifulsoup4, requests, playwright)
-# Add database libraries later (e.g., databases[sqlite], motor)
+requests
+beautifulsoup4
+databases[sqlite]
+apscheduler

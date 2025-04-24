@@ -25,7 +25,15 @@ function populateTable(data) {
             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${updatedDate} ${updatedTime}</td>
         `;
 
+        const sourceRow = document.createElement('tr');
+        sourceRow.innerHTML = `
+            <td colspan="4" class="px-6 py-2 whitespace-nowrap text-sm text-gray-500 text-center">
+                المصدر: ${item.source}
+            </td>
+        `;
+
         tableBody.appendChild(row);
+        tableBody.appendChild(sourceRow);
     });
 
     // Find the most recent update time from the data
